@@ -9,12 +9,18 @@ cp mongodb-deployment.yml.tmpl mongodb-deployment.yml
 cp web-deployment.yml.tmpl web-deployment.yml
 
 kubectl apply -f epirus-net-networkpolicy.yml,mongodb-deployment.yml,web-deployment.yml
-sleep 10
+echo fetching mongodb IP.....
+sleep 60
 name=$(kubectl get pods | grep mongo | awk -F '1/1' '{print $1}')
 ip=$(kubectl describe pod $name | awk -F 'IP:               ' '{print $2}')
 echo $name
 echo $ip
 latest=$(echo $ip)
-sed -i "s|172.17.0.5|$latest|g" "ingestion-deployment.yml"
-sed -i "s|172.17.0.5|$latest|g" "api-deployment.yml"
+sed -i "s|IP|$latest|g" "ingestion-deployment.yml"
+sed -i "s|IP|$latest|g" "api-deployment.yml"
+
+read -p 'Node Endpoint: ' node
+echo Your Node Endpoint: $node
+sed -i "s|NODEENDPOINT|$node|g" "ingestion-deployment.yml"
+sed -i "s|NODEENDPOINT|$node|g" "api-deployment.yml"
 kubectl apply -f api-deployment.yml,ingestion-deployment.yml
