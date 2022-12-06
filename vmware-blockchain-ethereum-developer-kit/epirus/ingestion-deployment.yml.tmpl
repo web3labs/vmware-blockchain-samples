@@ -27,11 +27,11 @@ spec:
       containers:
         - env:
             - name: MONGO_CLIENT_URI
-              value: mongodb://172.17.0.5:27017
+              value: mongodb://IP:27017
             - name: MONGO_DB_NAME
               value: epirus
             - name: NODE_ENDPOINT
-              value: http://212.47.234.63:9935/
+              value: NODEENDPOINT
           image: web3labs/epirus-free-ingestion:latest
           name: ingestion
           resources: {}
