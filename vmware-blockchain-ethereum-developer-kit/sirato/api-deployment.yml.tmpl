@@ -1,28 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: Epirus
-    kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
   labels:
-    io.kompose.service: api
+    run: api
   name: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: api
+      run: api
   strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: Epirus convert
-        kompose.version: 1.26.0 (40646f47)
-      creationTimestamp: null
       labels:
-        io.kompose.network/epirus-net: "true"
-        io.kompose.service: api
+        run: api
     spec:
       containers:
         - env:
@@ -40,4 +31,3 @@ spec:
           name: api
           resources: {}
       restartPolicy: Always
-status: {}
