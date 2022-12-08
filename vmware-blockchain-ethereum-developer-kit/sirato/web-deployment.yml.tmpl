@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: web
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: web
+    spec:
+      containers:
+        - env:
+            - name: API_URL
+              value: /api
+          image: web3labs/epirus-free-web:latest
+          name: web
+          resources: {}
+      restartPolicy: Always

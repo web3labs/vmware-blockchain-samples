@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: mongodb
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: mongodb
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: mongodb
+    spec:
+      containers:
+        - command:
+            - mongod
+            - --bind_ip
+            - 0.0.0.0     
+          env:
+            - name: COMPOSE_HTTP_TIMEOUT
+              value: "900"
+            - name: DOCKER_CLIENT_TIMEOUT
+              value: "900"
+          image: mongo:5.0.8
+          name: mongodb
+          resources: {}
+      restartPolicy: Always

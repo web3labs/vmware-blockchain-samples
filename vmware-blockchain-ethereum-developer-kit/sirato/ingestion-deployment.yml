@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: ingestion
+  name: ingestion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: ingestion
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: ingestion
+    spec:
+      containers:
+        - env:
+            - name: MONGO_CLIENT_URI
+              value: mongodb://172.17.0.3:27017
+            - name: MONGO_DB_NAME
+              value: epirus
+            - name: NODE_ENDPOINT
+              value: http://192.168.49.2:30545 
+          image: web3labs/epirus-free-ingestion:latest
+          name: ingestion
+          resources: {}
+      restartPolicy: Always

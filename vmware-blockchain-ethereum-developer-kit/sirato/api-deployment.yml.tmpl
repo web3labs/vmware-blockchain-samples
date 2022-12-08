@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: api
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: api
+    spec:
+      containers:
+        - env:
+            - name: MONGO_CLIENT_URI
+              value: mongodb://IP:27017
+            - name: MONGO_CREATE_INDICES
+              value: "true"
+            - name: MONGO_DB_NAME
+              value: epirus
+            - name: NODE_ENDPOINT
+              value: NODEENDPOINT
+            - name: REINDEX_ENDPOINT
+              value: http://ingestion/reindex/
+          image: web3labs/epirus-free-api:latest
+          name: api
+          resources: {}
+      restartPolicy: Always
